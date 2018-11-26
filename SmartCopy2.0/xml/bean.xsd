@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.w3school.com.cn"
+	xmlns="http://www.w3school.com.cn" elementFormDefault="qualified">
+	<xs:element name="beans">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="bean" maxOccurs="unbounded"
+					minOccurs="1"></xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="bean">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="import" minOccurs="0"></xs:element>
+				<xs:element ref="content" minOccurs="0" maxOccurs="1"></xs:element>
+				<xs:element ref="description" minOccurs="0" maxOccurs="1"></xs:element>
+				<xs:element ref="steps" minOccurs="0" maxOccurs="1"></xs:element>
+			</xs:sequence>
+			<xs:attribute name="id" type="xs:string" use="required" />
+			<xs:attribute name="name" type="xs:string"
+				use="required" />
+			<xs:attribute name="class" type="xs:string"
+				use="optional" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="import" type="xs:string"></xs:element>
+	<xs:element name="content" type="xs:string"></xs:element>
+	<xs:element name="description" type="xs:string"></xs:element>
+	<!-- 自定义步骤的根目录 -->
+	<xs:element name="steps" type="elementType" />
+	<!-- 定义参数值 -->
+	<xs:element name="define">
+		<xs:complexType>
+			<xs:attribute name="name" type="xs:string"
+				use="required" />
+			<xs:attribute name="value" type="xs:string"
+				use="required" />
+			<xs:attribute name="type" type="vartype" use="optional" />
+		</xs:complexType>
+	</xs:element>
+	<!-- ifelse -->
+	<xs:element name="if">
+		<xs:complexType mixed="true">
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="define" minOccurs="0"
+					maxOccurs="unbounded"></xs:element>
+				<xs:element ref="if" minOccurs="0" maxOccurs="unbounded"></xs:element>
+				<xs:element ref="loop" minOccurs="0"
+					maxOccurs="unbounded"></xs:element>
+				<xs:element ref="tool" minOccurs="0"
+					maxOccurs="unbounded"></xs:element>
+				<xs:element ref="append" minOccurs="0"
+					maxOccurs="unbounded"></xs:element>
+			</xs:choice>
+			<xs:attribute name="apara" type="xs:string"
+				use="required" />
+			<xs:attribute name="bpara" type="xs:string"
+				use="required" />
+			<xs:attribute name="compare" type="comparetype"
+				use="required" />
+		</xs:complexType>
+	</xs:element>
+	<!-- 循环 -->
+	<xs:element name="loop">
+		<xs:complexType mixed="true">
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="define" minOccurs="0"
+					maxOccurs="unbounded"></xs:element>
+				<xs:element ref="if" minOccurs="0" maxOccurs="unbounded"></xs:element>
+				<xs:element ref="loop" minOccurs="0"
+					maxOccurs="unbounded"></xs:element>
+				<xs:element ref="tool" minOccurs="0"
+					maxOccurs="unbounded"></xs:element>
+				<xs:element ref="append" minOccurs="0"
+					maxOccurs="unbounded"></xs:element>
+			</xs:choice>
+			<xs:attribute name="loopVar" type="xs:string"
+				use="optional" />
+			<xs:attribute name="stepVar" type="xs:string"
+				use="required" />
+			<xs:attribute name="beginIndex" type="xs:int"
+				use="required" />
+			<xs:attribute name="endIndex" type="xs:string"
+				use="required" />
+		</xs:complexType>
+	</xs:element>
+	<!-- 调用stringutil默认提供的方法，入参为数组或字符串，出参同样 -->
+	<xs:element name="tool">
+		<xs:complexType>
+			<xs:attribute name="toolName" type="tooltype"
+				use="required" />
+			<xs:attribute name="name" type="xs:string"
+				use="required" />
+			<xs:attribute name="value" type="xs:string"
+				use="required" />
+			<xs:attribute name="regex" type="xs:string"
+				use="optional" />
+			<xs:attribute name="beginIndex" type="xs:int"
+				use="optional" />
+			<xs:attribute name="endIndex" type="xs:int"
+				use="optional" />
+		</xs:complexType>
+	</xs:element>
+	<!-- 添加字符串到输出流中 -->
+	<xs:element name="append">
+		<xs:complexType>
+			<xs:attribute name="value" type="xs:string"
+				use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:simpleType name="vartype">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="string" />
+			<xs:enumeration value="array" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="tooltype">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="sub" />
+			<xs:enumeration value="split" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="comparetype">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="EQ" />
+			<xs:enumeration value="NEQ" />
+			<xs:enumeration value="BIG" />
+			<xs:enumeration value="MIN" />
+			<xs:enumeration value="BIGEQ" />
+			<xs:enumeration value="MINEQ" />
+			<xs:enumeration value="CONTAINS" />
+			<xs:enumeration value="STARTWITH" />
+			<xs:enumeration value="ENDWITH" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="elementType">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element ref="define" minOccurs="0"
+				maxOccurs="unbounded"></xs:element>
+			<xs:element ref="if" minOccurs="0" maxOccurs="unbounded"></xs:element>
+			<xs:element ref="loop" minOccurs="0" maxOccurs="unbounded"></xs:element>
+			<xs:element ref="tool" minOccurs="0" maxOccurs="unbounded"></xs:element>
+			<xs:element ref="append" minOccurs="0"
+				maxOccurs="unbounded"></xs:element>
+		</xs:choice>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.w3school.com.cn"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.w3school.com.cn bean.xsd">
+	<bean id="DemoRealize" name="AB归类器">
+		<content> String[] messages = message.split(&quot;,&quot;);
+			String aStr
+			= &quot;&quot;, bStr = &quot;&quot;;
+			for (int i = 0; i &lt;
+			messages.length; i++) {
+			if
+			(messages[i].startsWith(&quot;a&quot;)) {
+			aStr+=messages[i];
+			}
+			if (messages[i].startsWith(&quot;b&quot;)) {
+			bStr+=messages[i];
+			}
+			}
+			return
+			&quot;A:[&quot;+aStr+&quot;]B:[&quot;+bStr+&quot;]&quot;;
+		</content>
+	</bean>
+	<bean id="DemoRealize2" name="AB归类器2"
+		class="classz/DemoRealize.class" />
+	<bean name="测试1" id="test1">
+		<description>测试的Steps配置</description>
+		<steps>
+			<define name="name" value="张三" />
+			<define name="class" value="语文,数学,英语" />
+			<tool name="classs" toolName="split" value="${class}" />
+			<tool name="greads" value="120,111,130" toolName="split" />
+			<append value="姓名：${name}\n" />
+			<loop beginIndex="0" endIndex="3" stepVar="index">
+				<append value="${classs[index]}成绩是${greads[index]}\n" />
+			</loop>
+			<append value="老师：${@input}" />
+		</steps>
+	</bean>
+	<bean name="测试2" id="test2">
+		<description>测试的Steps配置</description>
+		<steps>
+			<define name="name" value="张三" />
+			<define name="class" value="语文,数学,英语" />
+			<tool name="classs" toolName="split" value="${class}" />
+			<tool name="greads" value="120,111,130" toolName="split" />
+			<append value="姓名：${name}\n" />
+			<if bpara="语文" compare="EQ" apara="@input">
+				<append value="${classs[0]}成绩是${greads[0]}" />
+			</if>
+			<if bpara="数学" compare="EQ" apara="@input">
+				<append value="${classs[1]}成绩是${greads[1]}" />
+			</if>
+			<if bpara="英语" compare="EQ" apara="@input">
+				<append value="${classs[2]}成绩是${greads[2]}" />
+			</if>
+		</steps>
+	</bean>
+	<bean name="Sql-Java" id="sqltojava">
+		<description>sql转乘append形式的java</description>
+		<steps>
+			<tool name="slqs" toolName="split" value="@input"
+				regex="&#x000A;" />
+			<append
+				value="StringBuilder sqlBF = new StringBuilder();&#x000A;" />
+			<append value="sqlBF.setLength(0);&#x000A;" />
+			<loop beginIndex="0" endIndex="n" stepVar="sql"
+				loopVar="${slqs}">
+				<append value="sqlBF.append(&quot;${sql}&quot;);&#x000A;" />
+			</loop>
+			<append value="this.sql.setSql(sqlBF);&#x000A;" />
+		</steps>
+	</bean>
+</beans>
