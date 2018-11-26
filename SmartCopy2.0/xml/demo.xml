@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<bean id="DemoRealize" name="AB归类器">
+		<content> String[] messages = message.split(&quot;,&quot;);
+			String aStr
+			= &quot;&quot;, bStr = &quot;&quot;;
+			for (int i = 0; i &lt;
+			messages.length; i++) {
+			if
+			(messages[i].startsWith(&quot;a&quot;)) {
+			aStr+=messages[i];
+			}
+			if (messages[i].startsWith(&quot;b&quot;)) {
+			bStr+=messages[i];
+			}
+			}
+			return
+			&quot;A:[&quot;+aStr+&quot;]B:[&quot;+bStr+&quot;]&quot;;
+		</content>
+	</bean>
+	<bean id="DemoRealize2" name="AB归类器2" class = "classz/DemoRealize.class"/>
+</root>

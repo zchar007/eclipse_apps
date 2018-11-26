@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.example.org/steps/"
+	targetNamespace="http://www.example.org/steps/">
+	<element name="root" type="tns:rootType"></element>
+	<complexType name="rootType">
+		<sequence>
+			<element name="steps" type="tns:stepsType"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="stepsType">
+		<sequence>
+			<element name="var" type="tns:varType"></element>
+			<element name="split" type="tns:splitType"></element>
+			<element name="put" type="tns:putType"></element>
+			<element name="putln" type="tns:putlnType"></element>
+			<element name="loop" type="tns:loopType"></element>
+			<element name="if" type="tns:ifType"></element>
+			<element name="sub" type="tns:subType"></element>
+			<element name="class" type="tns:classType"></element>
+		</sequence>
+		<attribute name="name" type="string" use="required"></attribute>
+		<attribute name="showName" type="string" use="required"></attribute>
+	</complexType>
+	<complexType name="varType">
+		<attribute name="name" type="string" use="required"></attribute>
+		<attribute name="value" type="string" use="required"></attribute>
+		<attribute name="valueType" type="tns:paraType" default=""
+			use="optional"></attribute>
+	</complexType>
+
+	<complexType name="splitType">
+		<attribute name="fromVar" type="string" use="required"></attribute>
+		<attribute name="toVar" type="string" use="required"></attribute>
+		<attribute name="split" type="string"></attribute>
+	</complexType>
+
+	<complexType name="putType">
+		<attribute name="putStr" type="string" use="required"></attribute>
+		<attribute name="index" type="string"></attribute>
+	</complexType>
+
+	<complexType name="putlnType">
+		<attribute name="putlnStr" type="string" use="required"></attribute>
+		<attribute name="index" type="string"></attribute>
+	</complexType>
+
+	<complexType name="loopType">
+		<sequence>
+			<element name="var" type="tns:varType"></element>
+			<element name="split" type="tns:splitType"></element>
+			<element name="put" type="tns:putType"></element>
+			<element name="putln" type="tns:putlnType"></element>
+			<element name="loop" type="tns:loopType"></element>
+			<element name="if" type="tns:ifType"></element>
+			<element name="sub" type="tns:subType"></element>
+			<element name="class" type="tns:classType"></element>
+		</sequence>
+		<attribute name="start" type="string"></attribute>
+		<attribute name="end" type="string"></attribute>
+		<attribute name="loopVar" type="string" use="required"></attribute>
+		<attribute name="stepVar" type="string" use="required"></attribute>
+	</complexType>
+	<complexType name="ifType">
+		<sequence>
+			<element name="var" type="tns:varType"></element>
+			<element name="split" type="tns:splitType"></element>
+			<element name="put" type="tns:putType"></element>
+			<element name="putln" type="tns:putlnType"></element>
+			<element name="loop" type="tns:loopType"></element>
+			<element name="if" type="tns:ifType"></element>
+			<element name="sub" type="tns:subType"></element>
+			<element name="class" type="tns:classType"></element>
+		</sequence>
+		<attribute name="compareVar" type="string" use="required"></attribute>
+		<attribute name="compare" type="tns:paraType" default=""
+			use="optional"></attribute>
+		<attribute name="compareType" type="tns:compareTypeType"
+			default="TYPE_IS" use="optional"></attribute>
+	</complexType>
+	<complexType name="subType">
+		<attribute name="start" type="string"></attribute>
+		<attribute name="end" type="string"></attribute>
+		<attribute name="value" type="string" use="required"></attribute>
+		<attribute name="toName" type="string" use="required"></attribute>
+	</complexType>
+	<simpleType name="paraType">
+		<restriction base="NMTOKEN">
+			<enumeration value="s"></enumeration>
+			<enumeration value="i"></enumeration>
+			<enumeration value="d"></enumeration>
+			<enumeration value="dt"></enumeration>
+			<enumeration value="dts"></enumeration>
+			<enumeration value="bd"></enumeration>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="compareTypeType">
+		<restriction base="NMTOKEN">
+			<enumeration value="DY" />
+			<enumeration value="XY" />
+			<enumeration value="DYDY" />
+			<enumeration value="XUDY" />
+			<enumeration value="EQ" />
+			<enumeration value="NEQ" />
+			<enumeration value="TYPE_IS" />
+			<enumeration value="TYPE_NOT_IS" />
+		</restriction>
+	</simpleType>
+	<complexType name="classType">
+		<attribute name="classpath" type="string" use="required"></attribute>
+	</complexType>
+</schema>
